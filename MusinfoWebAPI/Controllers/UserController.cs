@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusinfoBL.Services.Interface;
 using MusinfoDB.Models;
@@ -52,6 +51,14 @@ namespace MusinfoWebAPI.Controllers
             if (request == null)
                 return BadRequest();
 
+            var isUserNameExists = _service.Exists(x => x.UserName == request.UserName);
+            if (isUserNameExists)
+                return BadRequest("UserName is already exists");
+
+            var isEmailExists = _service.Exists(x => x.Email == request.Email);
+            if (isEmailExists)
+                return BadRequest("Email is already exists");
+
             var user = UserRequest.GetUserEntity(request);
             _service.Create(user);
             return Ok();
@@ -67,6 +74,14 @@ namespace MusinfoWebAPI.Controllers
             if (!isExists)
                 return NotFound();
 
+            var isUserNameExists = _service.Exists(x => x.UserName == request.UserName);
+            if (isUserNameExists)
+                return BadRequest("UserName is already exists");
+
+            var isEmailExists = _service.Exists(x => x.Email == request.Email);
+            if (isEmailExists)
+                return BadRequest("Email is already exists");
+
             var user = _service.Get(request.Id);
             user.UserName = request.UserName;
             user.Email = request.Email;
@@ -77,7 +92,8 @@ namespace MusinfoWebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("id/{id}")]
         public ActionResult Delete(int id)
         {
             if (id == 0)
@@ -87,6 +103,22 @@ namespace MusinfoWebAPI.Controllers
             if (user == null)
                 return NotFound();
 
+            _service.Delete(id);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("name/{name}")]
+        public ActionResult Delete(string username)
+        {
+            if (string .IsNullOrEmpty(username))
+                return BadRequest();
+
+            var user = _service.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase));
+            if (user == null)
+                return NotFound();
+
+            var id = user.Id;
             _service.Delete(id);
             return Ok();
         }

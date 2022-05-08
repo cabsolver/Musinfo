@@ -8,6 +8,7 @@ namespace CommonDataAccess.Finder.Interfaces
         public IQueryable<T> Find();
 
         public T Find(int id);
+        public T Find(string property);
 
         public bool Exists(Expression<Func<T, bool>> expression);
     }

@@ -18,6 +18,7 @@ namespace MusinfoDB.Finders
         public List<T> Get(Expression<Func<T, bool>> expression) => _finder.Find().Where(expression).ToList();
 
         public T Get(int id) => _finder.Find(id);
+        public T Get(string property) => _finder.Find(property);
 
         public bool Exists(Expression<Func<T, bool>> expression) => _finder.Exists(expression);
 

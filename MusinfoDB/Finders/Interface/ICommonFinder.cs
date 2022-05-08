@@ -11,6 +11,8 @@ namespace MusinfoDB.Finders.Interface
 
         public T Get(int id);
 
+        public T Get(string property);
+
         public bool Exists(Expression<Func<T, bool>> expression);
 
         public T? FirstOrDefault(Expression<Func<T, bool>> expression);

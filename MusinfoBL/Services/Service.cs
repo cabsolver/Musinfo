@@ -1,14 +1,8 @@
 ﻿using CommonDataAccess.Repository.Interfaces;
 using CommonDataAccess.UnitOfWork.Interface;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using MusinfoBL.Services.Interface;
 using MusinfoDB.Finders.Interface;
-using System.IdentityModel.Tokens.Jwt;
-using System;
 using System.Linq.Expressions;
-using System.Security.Claims;
-using MusinfoDB.Models;
 
 namespace MusinfoBL.Services
 {
@@ -31,6 +25,8 @@ namespace MusinfoBL.Services
         public List<T> Get(Expression<Func<T, bool>> expression) => _finder.Get(expression);
 
         public T Get(int id) => _finder.Get(id);
+
+        public T Get(string property) => _finder.Get(property);
 
         public bool Exists(Expression<Func<T, bool>> expression) => _finder.Exists(expression);
 

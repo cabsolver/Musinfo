@@ -10,6 +10,7 @@ namespace MusinfoBL.Services.Interface
         public List<T> Get(Expression<Func<T, bool>> expression);
 
         public T Get(int id);
+        public T Get(string property);
 
         public bool Exists(Expression<Func<T, bool>> expression);
 
